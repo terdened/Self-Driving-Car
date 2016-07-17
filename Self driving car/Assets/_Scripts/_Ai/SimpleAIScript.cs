@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 
 public class SimpleAIScript : BaseAIScript {
     float deltaTime = 0.0f;
@@ -8,11 +6,15 @@ public class SimpleAIScript : BaseAIScript {
     // Use this for initialization
     protected override void Start () {
         base.Start();
+
     }
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-        
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Log("Нажата кнопка \"Пробел\"");
+
         if (!_pathBehaviourScript.isPathProviderExist())
         {
             _carEngineScript.SetWheelTurn(0);

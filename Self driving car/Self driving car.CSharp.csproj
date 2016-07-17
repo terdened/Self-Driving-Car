@@ -83,6 +83,7 @@
     <Compile Include="Assets\_Scripts\_Ai\SimpleAIScript.cs" />
     <Compile Include="Assets\_Scripts\_Managers\_SceneManager.cs" />
     <Compile Include="Assets\_Scripts\_Path\PathProviderScript.cs" />
+    <Compile Include="Assets\_Scripts\_Ui\PanelInfoScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />

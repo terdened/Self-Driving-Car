@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class PathBehaviourScript : MonoBehaviour {
     public GameObject PointPrefab;
@@ -12,12 +13,14 @@ public class PathBehaviourScript : MonoBehaviour {
     private int _currentIndex;
     private List<Vector3> _pointList;
     private PathProviderScript pathProvider;
+    protected PanelInfoScript _panelInfoScript;
 
     // Use this for initialization
     void Start () {
         _currentIndex = -1;
         Track1.onClick.AddListener(Track1OnClick);
         Track2.onClick.AddListener(Track2OnClick);
+        _panelInfoScript = GameObject.Find("Info_panel").GetComponent<PanelInfoScript>();
     }
 	
 	// Update is called once per frame
@@ -42,6 +45,7 @@ public class PathBehaviourScript : MonoBehaviour {
             _currentIndex = -1;
             pathProvider = null;
             Panel.SetActive(true);
+            LogEndPath();
             return;
         }
 
@@ -64,6 +68,7 @@ public class PathBehaviourScript : MonoBehaviour {
         pathProvider = PathProviderPrefabs[0].GetComponent<PathProviderScript>();
         Panel.SetActive(false);
         AddNextPoint();
+        LogStartPath(1);
     }
 
     void Track2OnClick()
@@ -71,6 +76,18 @@ public class PathBehaviourScript : MonoBehaviour {
         pathProvider = PathProviderPrefabs[1].GetComponent<PathProviderScript>();
         Panel.SetActive(false);
         AddNextPoint();
+        LogStartPath(2);
     }
 
+    void LogStartPath(int number)
+    {
+        if(_panelInfoScript != null)
+            _panelInfoScript.AddDecisionLogRecord(String.Format("Начинаю движение по маршруту №{0}", number));
+    }
+
+    void LogEndPath()
+    {
+        if (_panelInfoScript != null)
+            _panelInfoScript.AddDecisionLogRecord("Конец маршрута");
+    }
 }

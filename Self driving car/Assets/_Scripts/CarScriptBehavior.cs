@@ -16,11 +16,13 @@ public class CarScriptBehavior : MonoBehaviour {
     public float _wheelAngle;
     private float _enginePower;
     private bool _brake;
+    private PanelInfoScript _panelInfoScript;
 
     // Use this for initialization
     void Start()
     {
         _wheelAngle = 0;
+        _panelInfoScript = GameObject.Find("Info_panel").GetComponent<PanelInfoScript>();
     }
 
     // Update is called once per frame
@@ -41,6 +43,18 @@ public class CarScriptBehavior : MonoBehaviour {
         {
             WheelColRL.brakeTorque = 0;
             WheelColRR.brakeTorque = 0;
+        }
+
+        UpdateInfoPanel();
+    }
+
+    private void UpdateInfoPanel()
+    {
+        if(_panelInfoScript != null)
+        {
+            _panelInfoScript.SetRpmValue((int)WheelColRR.rpm);
+            var rigidbody = this.GetComponent<Rigidbody>();
+            _panelInfoScript.SetSpeedValue((int)(rigidbody.velocity.magnitude * 3.6f));
         }
     }
 
