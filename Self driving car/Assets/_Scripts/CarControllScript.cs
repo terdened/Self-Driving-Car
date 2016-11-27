@@ -21,15 +21,15 @@ public class CarControllScript : MonoBehaviour {
         float h = _wheelAngle * ((float)Math.PI / 360f);
 
         _carEngineScript.SetEnginePower(v);
-        _carEngineScript.SetWheelTurn(h);
+        _carEngineScript.SetWheelTurn(h * 180/Mathf.PI);
 
         if (Input.GetKey(KeyCode.Space))
         {
-            _carEngineScript.SetBrake(true);
+            _carEngineScript.SetBrake(1);
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            _carEngineScript.SetBrake(false);
+            _carEngineScript.SetBrake(0);
         }
     }
 

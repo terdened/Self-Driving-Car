@@ -15,7 +15,7 @@ public class CarScriptBehavior : MonoBehaviour {
     public WheelCollider WheelColRL;
     public float _wheelAngle;
     private float _enginePower;
-    private bool _brake;
+    private float _brake;
     private PanelInfoScript _panelInfoScript;
 
     // Use this for initialization
@@ -34,15 +34,19 @@ public class CarScriptBehavior : MonoBehaviour {
         WheelColFL.steerAngle = _wheelAngle * SteerForce;
         WheelColFR.steerAngle = _wheelAngle * SteerForce;
 
-        if(_brake)
+        if(_brake > 0)
         {
-            WheelColRL.brakeTorque = BreakForce;
-            WheelColRR.brakeTorque = BreakForce;
+            WheelColRL.brakeTorque = BreakForce * _brake;
+            WheelColRR.brakeTorque = BreakForce * _brake;
+            WheelColFL.brakeTorque = BreakForce * _brake;
+            WheelColFR.brakeTorque = BreakForce * _brake;
         }
         else
         {
             WheelColRL.brakeTorque = 0;
             WheelColRR.brakeTorque = 0;
+            WheelColFL.brakeTorque = 0;
+            WheelColFR.brakeTorque = 0;
         }
 
         UpdateInfoPanel();
@@ -56,6 +60,12 @@ public class CarScriptBehavior : MonoBehaviour {
             var rigidbody = this.GetComponent<Rigidbody>();
             _panelInfoScript.SetSpeedValue((int)(rigidbody.velocity.magnitude * 3.6f));
         }
+    }
+
+    public float GetSpeed()
+    {
+        var rigidbody = this.GetComponent<Rigidbody>();
+        return rigidbody.velocity.magnitude * 3.6f;
     }
 
     public void SetEnginePower(float value)
@@ -88,7 +98,7 @@ public class CarScriptBehavior : MonoBehaviour {
         return result;
     }
 
-    public void SetBrake(bool value)
+    public void SetBrake(float value)
     {
         _brake = value;
     }

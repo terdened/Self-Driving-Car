@@ -19,19 +19,48 @@ public class SimpleAIScript : BaseAIScript {
         {
             _carEngineScript.SetWheelTurn(0);
             _carEngineScript.SetEnginePower(0);
-            _carEngineScript.SetBrake(true);
+            _carEngineScript.SetBrake(1);
             return;
         }
         else
         {
-            _carEngineScript.SetBrake(false);
+            _carEngineScript.SetBrake(0);
         }
-       
+
+        if (_pathBehaviourScript.GetLimitedValue() != -1 && _pathBehaviourScript.GetLimitedValue() < _carEngineScript.GetSpeed())
+            _carEngineScript.SetBrake(1);
+
+        var breakForce = GetBreakForce();
+
+        if (breakForce > 0)
+            _carEngineScript.SetBrake(breakForce);
+
+        //_carEngineScript.SetBrake(_pathBehaviourScript.GetBreakValue());
+
         var angleToWaypoint = GetAngleToPoint();
         _carEngineScript.SetWheelTurn(angleToWaypoint);
-        _carEngineScript.SetEnginePower(0.035f);
+        var carEnginePower = breakForce <= 0 ? 0.035f * _pathBehaviourScript.GetCurrentSpeedMultilplayer() : 0;
+        _carEngineScript.SetEnginePower(carEnginePower);
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         OnFps();
+    }
+
+    private float GetBreakForce()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position + transform.forward * 3, transform.forward);
+        Debug.DrawLine(transform.position + transform.forward * 3, transform.position + transform.forward * 18);
+        if (Physics.Raycast(ray, out hit, 15))
+        {
+            if (hit.collider.isTrigger)
+            {
+                var script = hit.transform.gameObject.GetComponent<LightControlScript>();
+                if (script != null && script.GetState() != 3)
+                    return (15 - hit.distance) / 15;
+            }
+        }
+
+        return 0;
     }
 
     private float GetAngleToPoint()

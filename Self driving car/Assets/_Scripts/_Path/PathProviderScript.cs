@@ -18,6 +18,24 @@ public class PathProviderScript : MonoBehaviour {
         return this.transform.GetChild(index);
     }
 
+    public float GetMaxSpeed(int index)
+    {
+        var script = this.transform.GetChild(index).GetComponent<PathPointBehaviourScript>();
+        return script.SpeedMultiplier;
+    }
+
+    public bool GetBreakValue(int index)
+    {
+        var script = this.transform.GetChild(index).GetComponent<PathPointBehaviourScript>();
+        return script.BreakValue;
+    }
+
+    public float GetLimitedSpeedValue(int index)
+    {
+        var script = this.transform.GetChild(index).GetComponent<PathPointBehaviourScript>();
+        return script.SpeedLimit;
+    }
+
     public int Count()
     {
         return this.transform.childCount;

@@ -5,8 +5,11 @@ using System.Collections;
 public class PathPointBehaviourScript : MonoBehaviour {
 
     public bool IsTriggered;
-	// Use this for initialization
-	void Start () {
+    public float SpeedMultiplier = 1;
+    public bool BreakValue = false;
+    public float SpeedLimit = -1;
+    // Use this for initialization
+    void Start () {
         IsTriggered = false;
     }
 	

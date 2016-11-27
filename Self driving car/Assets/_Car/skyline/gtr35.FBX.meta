@@ -3,12 +3,45 @@ guid: c2755eca7264c9742b38878223bf12c2
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: body
+    100002: glass
+    100004: //RootNode
+    100006: wheel_fl
+    100008: wheel_fr
+    100010: wheel_rl
+    100012: wheel_rr
+    400000: body
+    400002: glass
+    400004: //RootNode
+    400006: wheel_fl
+    400008: wheel_fr
+    400010: wheel_rl
+    400012: wheel_rr
+    2300000: body
+    2300002: glass
+    2300004: wheel_fl
+    2300006: wheel_fr
+    2300008: wheel_rl
+    2300010: wheel_rr
+    3300000: body
+    3300002: glass
+    3300004: wheel_fl
+    3300006: wheel_fr
+    3300008: wheel_rl
+    3300010: wheel_rr
     4300000: body
     4300002: glass
     4300004: wheel_fr
     4300006: wheel_fl
     4300008: wheel_rl
     4300010: wheel_rr
+    6400000: body
+    6400002: glass
+    6400004: wheel_fl
+    6400006: wheel_fr
+    6400008: wheel_rl
+    6400010: wheel_rr
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
@@ -16,7 +49,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 

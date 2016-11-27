@@ -10,7 +10,10 @@ public class PathBehaviourScript : MonoBehaviour {
     public Button Track2;
     public GameObject Panel;
     private GameObject _currentPoint;
+    private float _currentSpeedMultipler;
     private int _currentIndex;
+    private bool _currentBreakValue;
+    private float _currentLimitedValue;
     private List<Vector3> _pointList;
     private PathProviderScript pathProvider;
     protected PanelInfoScript _panelInfoScript;
@@ -51,11 +54,30 @@ public class PathBehaviourScript : MonoBehaviour {
 
         Destroy(_currentPoint);
         _currentPoint = (GameObject)Instantiate(PointPrefab, pathProvider.GetPoint(_currentIndex).position, transform.rotation);
+        _currentSpeedMultipler = pathProvider.GetMaxSpeed(_currentIndex);
+        _currentBreakValue = pathProvider.GetBreakValue(_currentIndex);
+        _currentLimitedValue = pathProvider.GetLimitedSpeedValue(_currentIndex);
     }
 
     public Vector3 GetCurrentPoint()
     {
         return _currentPoint.transform.position;
+    }
+
+    public float GetCurrentSpeedMultilplayer()
+    {
+        return _currentSpeedMultipler;
+    }
+
+
+    public bool GetBreakValue()
+    {
+        return _currentBreakValue;
+    }
+
+    public float GetLimitedValue()
+    {
+        return _currentLimitedValue;
     }
 
     public bool isPathProviderExist()
