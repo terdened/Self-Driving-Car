@@ -24,7 +24,7 @@ public class LightControlScript : MonoBehaviour {
         {
             case 1:
                 _counter++;
-                if(_counter > 1000)
+                if(_counter > 500)
                 {
                     ActiveYellow();
                 }
@@ -38,7 +38,7 @@ public class LightControlScript : MonoBehaviour {
                 return;
             case 3:
                 _counter++;
-                if (_counter > 1000)
+                if (_counter > 500)
                 {
                     ActiveYellow1();
                 }

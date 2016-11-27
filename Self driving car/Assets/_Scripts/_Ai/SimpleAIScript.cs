@@ -35,11 +35,21 @@ public class SimpleAIScript : BaseAIScript {
         if (breakForce > 0)
             _carEngineScript.SetBrake(breakForce);
 
-        //_carEngineScript.SetBrake(_pathBehaviourScript.GetBreakValue());
-
         var angleToWaypoint = GetAngleToPoint();
         _carEngineScript.SetWheelTurn(angleToWaypoint);
-        var carEnginePower = breakForce <= 0 ? 0.035f * _pathBehaviourScript.GetCurrentSpeedMultilplayer() : 0;
+        var carEnginePower = breakForce <= 0 ? _pathBehaviourScript.GetCurrentSpeedMultilplayer() : 0;
+
+        if (_carEngineScript.GetSpeed() >= _pathBehaviourScript.GetLimitedValue())
+        {
+            carEnginePower = 0;
+            //_carEngineScript.SetBrake(1);
+        }
+        else
+        if (_carEngineScript.GetSpeed() >= _pathBehaviourScript.GetLimitedValue() - 5)
+        {
+            carEnginePower *= (_pathBehaviourScript.GetLimitedValue() - _carEngineScript.GetSpeed()) / 10;
+        }
+
         _carEngineScript.SetEnginePower(carEnginePower);
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         OnFps();
@@ -47,16 +57,17 @@ public class SimpleAIScript : BaseAIScript {
 
     private float GetBreakForce()
     {
-        RaycastHit hit;
         Ray ray = new Ray(transform.position + transform.forward * 3, transform.forward);
-        Debug.DrawLine(transform.position + transform.forward * 3, transform.position + transform.forward * 18);
-        if (Physics.Raycast(ray, out hit, 15))
+        Debug.DrawLine(transform.position + transform.forward * 3, transform.position + transform.forward * 13);
+
+        var hits = Physics.RaycastAll(ray, 10);
+        foreach(var hit in hits)
         {
             if (hit.collider.isTrigger)
             {
                 var script = hit.transform.gameObject.GetComponent<LightControlScript>();
                 if (script != null && script.GetState() != 3)
-                    return (15 - hit.distance) / 15;
+                    return hit.distance < 5 ? 1 : (10 - hit.distance) / 10;
             }
         }
 
